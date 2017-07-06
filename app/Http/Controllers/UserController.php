@@ -74,7 +74,8 @@ class UserController extends Controller
 
     	return response()->json([
 			'saved' => true,
-			'id' => $profile->user_id,
+            'id' => $profile->user_id,
+            'image' => $profile->image,
 			'message' => 'Perfil Actualiza Satisfactoriamente',
 
 			]);
@@ -82,6 +83,15 @@ class UserController extends Controller
     protected function getFileName($file)
     {
     	return str_random(32).'.'.$file->extension();
+    }
+    public function auth_user(Request $request)
+    {
+        $user = User::with('profile')->findOrFail($request->user_id);
+
+
+        return response()->json([
+                'user' => $user
+            ]);
     }
 
 }

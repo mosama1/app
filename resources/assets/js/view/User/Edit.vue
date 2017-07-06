@@ -94,6 +94,8 @@
 	import { post, get } from '../../helpers/api.js'
 	import { toMultipartedForm } from '../../helpers/form.js'
 	import ImageUpload from '../../components/ImageUpload.vue'
+	import Auth from '../../store/auth'
+
 
 	export default {
 		components: {
@@ -122,12 +124,13 @@
 			save() {
 				this.isProcessing = true;
 				const form = toMultipartedForm(this.form, 'edit')
-				console.log(this.form)
-				console.log(form)
 				post(`/api/users/${this.$route.params.id}?_method=PUT`, form)
 					.then((res) => {
 						if (res.data.saved) {
 							Flash.setSuccess(res.data.message)
+							if (Auth.state.api_token && Auth.state.user_id === parseInt(this.$route.params.id)) {
+								Auth.setImage(res.data.image)
+							}
 							this.$router.push(`/users/${this.$route.params.id}`)
 							this.isProcessing = false
 						}

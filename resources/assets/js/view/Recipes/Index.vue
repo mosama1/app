@@ -13,22 +13,22 @@
 					</a>
 				</li>
 				<li :class="pagination.current_page === 1 ? 'disabled' : '' ">
-					<a href="" @click.prevent="paginate(`/api/recipes?page=${pagination.current_page - 1}`, (pagination.current_page === 1) ? false : true)">
+					<a href="" @click.prevent="paginate(pagination.current_page - 1, (pagination.current_page === 1) ? false : true)">
 						<
 					</a>
 				</li>
 				<li v-for="page in pagination.last_page" :class="pagination.current_page === page ? 'active' : ''">
-					<a href="" @click.prevent="paginate(`/api/recipes?page=${page}`, (pagination.current_page === page) ? false : true)">
+					<a href="" @click.prevent="paginate(page, (pagination.current_page === page) ? false : true)">
 						{{page}}
 					</a>
 				</li>
 				<li :class="pagination.current_page === pagination.last_page ? 'disabled' : '' ">
-					<a href="" @click.prevent="paginate(`/api/recipes?page=${pagination.current_page + 1}`, (pagination.current_page === pagination.last_page) ? false : true)">
+					<a href="" @click.prevent="paginate(pagination.current_page + 1, (pagination.current_page === pagination.last_page) ? false : true)">
 						>
 					</a>
 				</li>
 				<li :class="pagination.current_page === pagination.last_page ? 'disabled' : '' ">
-					<a href="" @click.prevent="paginate(`/api/recipes?page=${pagination.last_page}`, (pagination.current_page === pagination.last_page) ? false : true)">
+					<a href="" @click.prevent="paginate(pagination.last_page, (pagination.current_page === pagination.last_page) ? false : true)">
 						>>
 					</a>
 				</li>
@@ -62,7 +62,7 @@
 		data() {
 			return {
 				recipes: [],
-				page: (this.$route.params.page === undefined) ? `/api/recipes?page=1` : `/api/recipes?page=${this.$route.params.page}`,
+				page: (this.$route.params.page === undefined) ? 1 : this.$route.params.page,
 				pagination: {},
 				router: this.$route,
 			    query: '',
@@ -77,20 +77,25 @@
 			paginate(page, state) {
 				if (!this.isLoad) {
 					if (this.$route.params.string) {
-						page = `/api/recipes/search?string=${this.$route.params.string}`
+						var param_page  = (page !== 1) ? `&page=${page}` : '' ;
+						var url = `/api/recipes/search?string=${this.$route.params.string}${param_page}`
+					}else {
+						var param_page  = (page !== 1) ? `?page=${page}` : '' ;
+						var url = `/api/recipes${param_page}`
 					}
 					if (state) {
 						this.isLoad = true
-						get(page)
+						get(url)
 							.then((res) => {
-								console.log(res.data.recipes)
 								this.recipes = res.data.recipes.data
 								this.pagination = res.data.recipes
 								delete this.pagination.data
 								if (this.$route.params.string) {
-									this.$router.push(`/recipes/search/${this.$route.params.string}`)
+									param_page = (page !== 1) ? `/page/${page}` : ''
+									this.$router.push(`/recipes/search/${this.$route.params.string}${param_page}`)
 								}else {
-									this.$router.push(`/recipes/page/${this.pagination.current_page}`)
+									param_page = (page !== 1) ? `/page/${page}` : ''
+									this.$router.push(`/recipes${param_page}`)
 								}
 								setTimeout( () => {
 									this.isLoad = false
@@ -98,11 +103,10 @@
 							})
 					}
 				}
-			}, 
+			},
 			search() {
-
 				if (!this.isLoad) {
-					if (this.query.length > 0) {
+					if (this.query.trim().length > 0) {
 						this.isLoad = true
 						get('/api/recipes/search?string='+ this.query)
 							.then((res) => {
@@ -116,7 +120,7 @@
 							})
 					}
 				}
-			}, 
+			},
 			ejemplo(link) {
 
 			}

@@ -6,23 +6,29 @@
                     <router-link to="/">Recipe Box</router-link>
                 </div>
                 <ul class="navbar__list">
-                    <li class="navbar__item">
+                    <li class="navbar__item perfil" v-if="check" :class="(this.$route.meta.name == 'users' && parseInt(this.$route.params.id) === auth.user_id) ? 'active' : ''">
+                        <router-link :to="`/users/${auth.user_id}`">
+                            <img :src="`/img/users/${auth.image}`" alt="">
+                            <span>{{auth.name}}</span>
+                            <div class="clear"></div>
+                        </router-link>
+                    </li>
+                    <li class="navbar__item" :class="(this.$route.meta.name == 'users' && parseInt(this.$route.params.id) !== auth.user_id) ? 'active' : ''">
                         <router-link to="/users">Usuarios</router-link>
                     </li>
-                   <li class="navbar__item">
+                    <li class="navbar__item sub_menu" :class="this.$route.meta.name == 'recipes' ? 'active' : ''">
                         <router-link to="/recipes">Recetas</router-link>
+                        <ul>
+                            <li class="navbar__item" v-if="check">
+                                <router-link to="/recipes/create">Crear Receta</router-link>
+                            </li>
+                        </ul>
                     </li>
                     <li class="navbar__item" v-if="!check">
                         <router-link to="/login">Iniciar Sesion</router-link>
                     </li>
                     <li class="navbar__item" v-if="!check">
                         <router-link to="/register">Registrarse</router-link>
-                    </li>
-                    <li class="navbar__item" v-if="check">
-                        <router-link :to="`/users/${auth.user_id}`">Perfil</router-link>
-                    </li>
-                    <li class="navbar__item" v-if="check">
-                        <router-link to="/recipes/create">Crear Receta</router-link>
                     </li>
                     <li class="navbar__item" v-if="check">
                         <a @click.stop="logout">Salir</a>
@@ -55,7 +61,6 @@
 import Flash from './helpers/flash.js'
 import Auth from './store/auth'
 import { post } from './helpers/api.js'
-import router from './router/index.js'
     export default {
         created() {
             Auth.inicialize()
@@ -85,7 +90,7 @@ import router from './router/index.js'
                         }
                     })
             }
-        },      
+        },
 
     }
 

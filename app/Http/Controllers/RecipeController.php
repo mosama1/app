@@ -30,6 +30,7 @@ class RecipeController extends Controller
 								['name', 'LIKE', '%'.$request->string.'%'],
 							])->take(10)->paginate(12);
 
+        // dd($recipes);
 
     	return response()->json([
     			'recipes' => $recipes
@@ -219,7 +220,7 @@ class RecipeController extends Controller
 		if (count($ingredients)) {
 			$recipe->ingredients()->saveMany($ingredients);
 		}
-		
+
 		if (count($directions)) {
 			$recipe->directions()->saveMany($directions);
 		}

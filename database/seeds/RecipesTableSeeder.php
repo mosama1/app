@@ -28,7 +28,7 @@ class RecipesTableSeeder extends Seeder
         RecipeIngredient::truncate();
         Recipe::truncate();
 
-        foreach (range(1, 300) as $i) {
+        foreach (range(1, 350) as $i) {
             $name_img = "test".$i.".png";
             copy(base_path('public/img/test.png'), base_path('public/img/recipes/'.$name_img));
 

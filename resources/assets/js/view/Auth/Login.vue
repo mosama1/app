@@ -43,7 +43,7 @@
                 post('/api/login', this.form)
                     .then((res) => {
                         if (res.data.authenticated) {
-                            Auth.set(res.data.api_token, res.data.user_id)
+                            Auth.set(res.data.api_token, res.data.user_id, res.data.profile)
                             Flash.setSuccess('Bienvenido!!')
                             this.$router.push('/')
                         }
