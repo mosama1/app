@@ -37,7 +37,6 @@
 			<transition name="loading">
 				<div class="loading absolute" v-if="isLoad"></div>
 			</transition>
-
 			<transition-group name="recipe_index" tag="ul">
 				<li class="recipe__item" v-for="(recipe, index) in recipes" :key="recipe">
 					<div class="recipe__inner">
@@ -111,7 +110,6 @@
 						get('/api/recipes/search?string='+ this.query)
 							.then((res) => {
 								this.recipes = res.data.recipes.data
-								console.log(this.recipes)
 								this.pagination = res.data.recipes
 								delete this.pagination.data
 

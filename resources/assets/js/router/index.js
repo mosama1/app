@@ -23,8 +23,8 @@ const router = new VueRouter({
                 //Recipe
                 {path: '/recipes', component: RecipeIndex, meta: {name: 'recipes'}},
                 {path: '/recipes/page/:page', component: RecipeIndex, meta: {name: 'recipes'}},
-				{path: '/recipes/search/:string', component: RecipeIndex, meta: {name: 'recipes'}},
-				{path: '/recipes/search/:string/page/:page', component: RecipeIndex, meta: {name: 'recipes'}},
+		{path: '/recipes/search/:string', component: RecipeIndex, meta: {name: 'recipes'}},
+		{path: '/recipes/search/:string/page/:page', component: RecipeIndex, meta: {name: 'recipes'}},
                 {path: '/recipes/create', component: RecipeForm, meta: {mode: 'create', name: 'recipes'}},
                 {path: '/recipes/:id', component: RecipeShow, meta: {name: 'recipes'}},
                 {path: '/recipes/:id/edit', component: RecipeForm, meta: {mode: 'edit', name: 'recipes'}},
