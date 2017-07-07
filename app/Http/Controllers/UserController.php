@@ -24,8 +24,12 @@ class UserController extends Controller
 
     public function show($id)
     {
-    	$user = User::with('profile', 'recipes')->findOrFail($id);
+    	//$user = User::with('profile', 'recipes')->findOrFail($id);
 
+        $user = User::with( ['profile', 'recipes' => function($query){
+           $query->orderBy('created_at', 'desc')->paginate(5);
+        }])->findOrFail($id);
+        $user->number_recipes = count($user->recipes);
 
     	return response()->json([
     			'user' => $user
@@ -84,14 +88,6 @@ class UserController extends Controller
     {
     	return str_random(32).'.'.$file->extension();
     }
-    public function auth_user(Request $request)
-    {
-        $user = User::with('profile')->findOrFail($request->user_id);
 
-
-        return response()->json([
-                'user' => $user
-            ]);
-    }
 
 }

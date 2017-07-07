@@ -81,6 +81,7 @@
 		created() {
 			get(`/api/recipes/${this.$route.params.id}`)
 				.then((res) => {
+					console.log(res)
 					this.recipe = res.data.recipe
 					this.isLoad = true
 
@@ -93,7 +94,7 @@
 					.then((res) => {
 						if (res.data.deleted) {
 							Flash.setSuccess(res.data.message)
-							this.$router.push('/')
+							this.$router.push('/recipes')
 						}
 					})
 			}

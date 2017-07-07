@@ -111,7 +111,7 @@
 				.then((res) => {
 					Vue.set(this.$data, 'user', res.data.user)
 					this.isLoad = true
-					//onsole.log(res.data.user)
+					console.log(res.data)
 				})
 		},
 		data() {
