@@ -55,8 +55,6 @@
 <script type="text/javascript">
 	// `
 	import { get } from '../../helpers/api.js'
-
-
 	export default {
 		data() {
 			return {
@@ -119,9 +117,6 @@
 					}
 				}
 			},
-			ejemplo(link) {
-
-			}
 		},
 		computed: {
 	   		computedList: function () {

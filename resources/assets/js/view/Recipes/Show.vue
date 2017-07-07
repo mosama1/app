@@ -49,7 +49,7 @@
 						<ul>
 							<li v-for="(direction, i) in recipe.directions">
 								<p>
-									<strong>{{i + 1}}</strong>
+									<strong>{{i + 1}}- </strong>
 									{{direction.description}}
 								</p>
 							</li>
@@ -64,7 +64,6 @@
 	import Flash from '../../helpers/flash.js'
 	import Auth from '../../store/auth.js'
 	import { get, del } from '../../helpers/api.js'
-
 	export default {
 		data() {
 			return {
@@ -81,10 +80,8 @@
 		created() {
 			get(`/api/recipes/${this.$route.params.id}`)
 				.then((res) => {
-					console.log(res)
 					this.recipe = res.data.recipe
 					this.isLoad = true
-
 				})
 		},
 		methods: {
