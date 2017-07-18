@@ -12,27 +12,31 @@ import RecipeForm from '../view/Recipes/Form.vue'
 import UserProfile from '../view/User/Profile.vue'
 import UserEdit from '../view/User/Edit.vue'
 import UserIndex from '../view/User/Index.vue'
+import Home from '../view/Home/Index.vue'
 Vue.use(VueRouter);
 
 const router = new VueRouter({
 	routes: [
 		//Auth
-                {path: '/register', component: Register},
-                {path: '/login', component: Login},
+		{path: '/register', component: Register},
+		{path: '/login', component: Login},
 
-                //Recipe
-                {path: '/recipes', component: RecipeIndex, meta: {name: 'recipes'}},
-                {path: '/recipes/page/:page', component: RecipeIndex, meta: {name: 'recipes'}},
+		//Home
+		{path: '/', component: Home},
+
+		//Recipe
+		{path: '/recipes', component: RecipeIndex, meta: {name: 'recipes'}},
+		{path: '/recipes/page/:page', component: RecipeIndex, meta: {name: 'recipes'}},
 		{path: '/recipes/search/:string', component: RecipeIndex, meta: {name: 'recipes'}},
 		{path: '/recipes/search/:string/page/:page', component: RecipeIndex, meta: {name: 'recipes'}},
-                {path: '/recipes/create', component: RecipeForm, meta: {mode: 'create', name: 'recipes'}},
-                {path: '/recipes/:id', component: RecipeShow, meta: {name: 'recipes'}},
-                {path: '/recipes/:id/edit', component: RecipeForm, meta: {mode: 'edit', name: 'recipes'}},
+		{path: '/recipes/create', component: RecipeForm, meta: {mode: 'create', name: 'recipes'}},
+		{path: '/recipes/:id', component: RecipeShow, meta: {name: 'recipes'}},
+		{path: '/recipes/:id/edit', component: RecipeForm, meta: {mode: 'edit', name: 'recipes'}},
 
-                //User
-                {path: '/users/:id', component: UserProfile, meta: {name: 'users'}},
-                {path: '/users/:id/edit', component: UserEdit, meta: {name: 'users'}},
-                {path: '/users', component: UserIndex, meta: {name: 'users'}}
+		//User
+		{path: '/users/:id', component: UserProfile, meta: {name: 'users'}},
+		{path: '/users/:id/edit', component: UserEdit, meta: {name: 'users'}},
+		{path: '/users', component: UserIndex, meta: {name: 'users'}}
 	]
 });
 
